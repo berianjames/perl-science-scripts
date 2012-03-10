@@ -1,0 +1,240 @@
+# Astro-ph filter configuration file
+
+Feed: http://export.arxiv.org/rss/astro-ph
+
+cosmic microwave background
+dark matter
+diffuse radiation
+distance scale
+early universe
+gravitational lensing
+large-scale structure of universe 
+
+GALAXIES
+
+    * galaxies: abundances
+    * galaxies: active
+    * (galaxies:) BL Lacertae objects: general
+    * (galaxies:) BL Lacertae objects: individual (..., ...)
+    * galaxies: clusters: general
+    * galaxies: clusters: individual (..., ...)
+    * galaxies: binary
+    * galaxies: compact
+    * (galaxies:) cooling flows
+    * galaxies: distances and redshifts
+    * galaxies: dwarf
+    * galaxies: elliptical and lenticular, cD
+    * galaxies: evolution
+    * galaxies: formation
+    * galaxies: fundamental parameters (classification, colors, luminosities, masses, radii, etc.)
+    * galaxies: general
+    * galaxies: halos
+    * galaxies: individual (..., ...)
+    * galaxies: interactions
+    * (galaxies:) intergalactic medium
+    * galaxies: ISM
+    * galaxies: irregular
+    * galaxies: jets
+    * galaxies: kinematics and dynamics
+    * (galaxies:) Local Group
+    * galaxies: luminosity function, mass function
+    * (galaxies:) Magellanic Clouds
+    * galaxies: magnetic fields
+    * galaxies: nuclei
+    * galaxies: peculiar
+    * galaxies: photometry
+    * (galaxies:) quasars: absorption lines
+    * (galaxies:) quasars: emission lines
+    * (galaxies:) quasars: general
+    * (galaxies:) quasars: individual (..., ...)
+    * galaxies: Seyfert
+    * galaxies: spiral
+    * galaxies: starburst
+    * galaxies: star clusters
+    * galaxies: statistics
+    * galaxies: stellar content
+    * galaxies: structure 
+
+THE GALAXY
+
+    * Galaxy: abundances
+    * Galaxy: center
+    * Galaxy: evolution
+    * Galaxy: formation
+    * Galaxy: fundamental parameters
+    * Galaxy: general
+    * (Galaxy:) globular clusters: general
+    * (Galaxy:) globular clusters: individual (..., ...)
+    * Galaxy: halo
+    * Galaxy: kinematics and dynamics
+    * (Galaxy:) open clusters and associations: general
+    * (Galaxy:) open clusters and associations: individual (..., ...)
+    * (Galaxy:) solar neighborhood
+    * Galaxy: stellar content
+    * Galaxy: structure 
+
+INTERSTELLAR MEDIUM (ISM), NEBULAE
+
+    * ISM: abundances
+    * ISM: atoms
+    * ISM: bubbles
+    * ISM: clouds
+    * (ISM:) cosmic rays
+    * (ISM:) dust, extinction
+    * ISM: general
+    * ISM: globules
+    * (ISM:) HII regions
+    * ISM: individual (..., ...) (except planetary nebulae)
+    * ISM: jets and outflows
+    * ISM: Herbig-Haro objects
+    * ISM: kinematics and dynamics
+    * ISM: magnetic fields
+    * ISM: molecules
+    * (ISM:) planetary nebulae: general
+    * (ISM:) planetary nebulae: individual (..., ...)
+    * (ISM:) reflection nebulae
+    * ISM: structure
+    * (ISM:) supernova remnants
+    * ISM: HI
+    * ISM: evolution
+    * ISM: lines and bands 
+
+STARS
+
+    * stars: abundances
+    * stars: activity
+    * stars: AGB and post-AGB
+    * stars: atmospheres
+    * (stars:) binaries (including multiple): close
+    * (stars:) binaries: eclipsing
+    * (stars:) binaries: general
+    * (stars:) binaries: symbiotic
+    * (stars:) binaries: spectroscopic
+    * (stars:) binaries: visual
+    * (stars:) blue stragglers
+    * stars: carbon
+    * stars: chemically peculiar
+    * stars: chromospheres
+    * (stars:) circumstellar matter
+    * (stars:) color-magnitude diagrams (HR diagram)
+    * stars: coronae
+    * stars: distances
+    * stars: early-type
+    * stars: emission-line, Be
+    * stars: evolution
+    * stars: flare
+    * stars: formation
+    * stars: fundamental parameters (classification, colors, luminosities, masses, radii, temperatures, etc.)
+    * stars: general
+    * stars: horizontal-branch
+    * stars: imaging
+    * stars: individual (..., ...)
+    * stars: interiors
+    * stars: kinematics
+    * stars: late-type
+    * stars: low-mass, brown dwarfs
+    * stars: luminosity function, mass function
+    * stars: magnetic fields
+    * stars: mass-loss
+    * stars: neutron
+    * (stars:) novae, cataclysmic variables
+    * stars: oscillations (including pulsations)
+    * stars: peculiar
+    * (stars:) planetary systems
+    * stars: Population II
+    * stars: pre-main sequence
+    * (stars:) pulsars: general
+    * (stars:) pulsars: individual (..., ...)
+    * stars: rotation
+    * stars: spots
+    * stars: statistics
+    * (stars:) subdwarfs
+    * (stars:) supergiants
+    * (stars:) supernovae: general
+    * (stars:) supernovae: individual (..., ...)
+    * (stars: variables:) Cepheids
+    * (stars: variables:) delta Scuti
+    * stars: variables: other
+    * (stars:) white dwarfs
+    * stars: Wolf-Rayet
+    * (stars: variables:) RR Lyrae variable
+    * stars: variables: general
+    * (stars: variables:) Miras
+    * stars: winds, outflows 
+
+SOLAR SYSTEM
+
+    * comets: general
+    * comets: individual (..., ...)
+    * Earth
+    * interplanetary medium
+    * meteors, meteoroids
+    * minor planets, asteroids
+    * Moon
+    * planets and satellites: general
+    * planets and satellites: individual (alphabetic order)
+    * solar system: formation
+    * solar system: general
+    * Sun
+    * ephemerides
+    * Kuiper Belt, Oort cloud 
+
+ASTROMETRY AND CELESTIAL MECHANICS
+
+    * astrometry
+    * celestial mechanics, stellar dynamics
+    * occultations
+    * reference systems
+    * time 
+
+ASTRONOMICAL INSTRUMENTATION, METHODS AND TECHNIQUES
+
+    * instrumentation: detectors
+    * instrumentation: interferometers
+    * instrumentation: miscellaneous
+    * instrumentation: photometers
+    * instrumentation: polarimeters
+    * instrumentation: spectrographs
+    * methods: analytical
+    * methods: data analysis
+    * methods: miscellaneous
+    * methods: numerical
+    * methods: observational
+    * methods: statistical
+    * site testing
+    * techniques: image processing
+    * techniques: interferometric
+    * techniques: miscellaneous
+    * techniques: photometric
+    * techniques: polarimetric
+    * techniques: radar astronomy
+    * techniques: radial velocities
+    * techniques: spectroscopic
+    * telescopes
+    * space vehicles: instumentation
+    * instrumentation: adaptive optics
+    * methods: n-body simulations 
+
+ASTRONOMICAL DATABASES
+
+    * atlases
+    * catalogs
+    * surveys 
+
+SOURCES AS A FUNCTION OF WAVELENGTH
+
+    * gamma rays
+    * infrared radiation
+    * radio continuum
+    * radio emission lines
+    * ultraviolet emission
+    * X-rays
+    * submillimeter 
+
+GENERAL
+
+    * errata, addenda
+    * physical data and processes
+    * sociology of astronomy
+    * standards 
+

@@ -1,0 +1,42 @@
+# Astro-ph filter configuration file
+
+Feed: http://export.arxiv.org/rss/astro-ph
+
+galaxy 0.5
+galaxies 0.5
+universe 3
+supernovae type Ia 3
+correlation function 2
+angular correlation function 1
+projected correlation function 1
+genus 4
+Minkowski functional 4
+Gaussian random 1
+Gaussian random 1
+Gaussian field 1
+Gaussian fields 1
+topology 2
+cosmology 3
+large-scale structure 3
+density field 2
+halo 4
+dark matter 2
+structure formation 5
+w_p 5
+cosmological constant 2
+statistics 1
+likelihood 2
+cmb 1
+lensing 1
+weak lensing 1
+gravitational lensing 1
+Freidmann equation 4
+inflation 2
+dark energy 2
+solar -1
+star -0.2
+stellar -0.3
+magnetic -1
+braneworld -0.5
+jet -0.2
+redshift 0.5

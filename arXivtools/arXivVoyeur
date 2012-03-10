@@ -1,0 +1,247 @@
+#!/usr/bin/perl
+
+# This is the arXiv Voyeur, created to assign
+# papers from the daily astro-ph mailing to members
+# of your research group, based on keywords
+# assigned to those individuals.
+#
+# Run using: arXivVoyeur --config=conffile --output=outfile [--debug]
+#
+# By Berian James, based on a script by Richard Edgar
+
+use warnings;
+use strict;
+use Getopt::Long;
+use XML::FeedPP;
+
+my( $rcs, $rev, $rcsdate );
+my( $configFile, $htmlFile );
+my( @feeds, @articleList, %scores, @artItems);
+
+my( $feedLocation );
+my( $totalArticles, $youngArticles, $goodArticles );
+my( $debug );
+my $nArticles = 15; # Just include the n highest ranked articles
+
+# -------------------------------------
+# Check command line options
+$debug = "";
+$configFile = "";
+$htmlFile = "";
+GetOptions( 'debug' => \$debug, 
+	    'config=s' => \$configFile, 
+	    'output=s' => \$htmlFile );
+
+if( $debug ){
+    print "Debug mode enabled\n";
+}
+
+# -------------------------------------
+# Attempt to read in the configuration file
+
+&LoadDataFile( $configFile );
+
+# -------------------------------------
+# Process each feed, to extract the articles
+foreach $feedLocation( @feeds ){
+    &ProcessFeed( $feedLocation );
+}
+$totalArticles = @articleList;
+print "\nFound $totalArticles articles\n";
+
+
+# ------------------------------------
+# Score the articles, and weed out the unworthy
+&ProcessArticles;
+$goodArticles = @articleList;
+print "\nFound $goodArticles scores high enough\n";
+
+# ------------------------------------
+# Sort the list
+@articleList = sort CompareArticles  @articleList;
+@articleList = @articleList[1..10];
+$goodArticles = @articleList;
+print "\nUsing best $goodArticles articles.\n";
+
+# ------------------------------------
+# Write the output file
+my $feed = XML::FeedPP::RDF->new();
+$feed->title( "astro-ph updates on arXiv.org" );
+$feed->link( "http://www.arxiv.org/" );
+$feed->description( "Astrophysics (astro-ph) updates on the arXiv.org e-print archive" );
+foreach my $article (@articleList) {
+	@artItems = split(/!!/,$article);
+	my $item = $feed->add_item( "$artItems[3]" );
+	$item->title( "$artItems[1]" );
+	$item->description( "$artItems[2]" );
+}
+$feed->to_file( "$htmlFile" );
+print "\nastroph-filter complete\n";
+
+exit;
+
+# =============================================
+
+sub LoadDataFile{
+    # Reads in the data file supplied in the argument
+    # Fills in the globals @feeds
+    #                      @scores
+    #                      $htmlFile
+    #                      $minScore
+    #                      $maxAge
+    my( $inFile ) = @_;
+    my( @configLines, $line );
+    
+    if( $debug ){
+	print "\nEntering LoadDataFile\n";
+    }
+
+    # Open the file, and slurp it in
+    open( myConfig, "<".$inFile ) || die "Can't open configuration file\n";
+    @configLines = <myConfig>;
+    close( myConfig );
+
+    # Loop over each line, determining what it is
+    foreach $line ( @configLines ){
+	if( $line =~ /^\#/ ) {
+	    # Comment lines start with "#"
+	}
+	elsif( $line =~ /^Feed:\s*(.*)/ ){
+	    # We have a new feed
+	    push( @feeds, $1 );
+	    if( $debug ){
+		print "Feed location: $1\n";
+	    }
+	}
+	elsif(  $line =~ /^(\S+)/i){
+	    my @tmp = split(/,/,$line);
+	    my $name = shift(@tmp);
+	    my $keywords = lc(join(' ',@tmp));
+	    $scores{$name} = $keywords;
+	    # We have a word score
+	    # The 'i' on the end makes match case-insensitive
+	    # And what about that little 'lc' command? (probably lower case)
+	    #$scores{lc($1)} = $2;
+	    #if( $debug ){
+		#print "New pattern \"$keyword\" with score $tmpscore\n";
+	    #}
+	}
+    }
+
+    if( $debug ){
+	print "Configuration file loaded\n";
+    }
+    print %scores;
+}
+
+
+
+# =============================================
+
+sub ProcessFeed{
+    # Processes the given feed, extracting the astro-ph
+    # articles
+    # These are added onto the global @articles
+    my( $source ) = @_;
+    my( $feed, $currArticle );
+
+    if( $debug ){
+	print "\nProcessing feed $source\n";
+    }
+
+    # Open up the feed
+    # Return if we get nothing
+    unless( $feed = XML::FeedPP->new( $source ) ) {
+	print STDERR "Can't open $source\n";
+	return;
+    }
+    
+    foreach my $item ( $feed->get_item() ) {
+#        print "URL: ", $item->link(), "\n";
+#        print "Title: ", $item->title(), "\n";
+#	print "Abstract: ", $item->description(), "\n";
+  
+	$currArticle = "Title: " . $item->title()."\n";
+	$currArticle = $currArticle . "Abstract: " . $item->description() ."\n";
+	$currArticle = $currArticle . "URL: " . $item->link() ."\n";
+	push(@articleList,$currArticle);
+    }
+
+    if( $debug ){
+	print "Feed processed\n";
+    }
+}
+
+# =============================================
+
+sub ProcessArticles{
+    # Routine which goes through all the articles,
+    # scores them, and accumulates them onto
+    # the output list
+    my( @outputArticles, $article );
+    my( $title, $authorText, $abstract, $articleURL );
+    my( $matchText, $articleScore );
+    my( $wordCount, $word );
+    my( $artLine );
+    
+    if( $debug ){
+	print "\nProcessing main article list\n";
+    }
+
+    foreach $article( @articleList ){
+	# Chomp out the new lines - they only make things
+	# difficult... and get rid of those pesky HTML
+	# tags in the Abstract
+	$article =~ tr/\n/ /s;
+
+	# Check we can extract title etc.
+	if( $article =~ /Title:\s(.*)Abstract:\s(.*)URL:\s(.*)/m){
+	    $title = $1;
+	    $abstract = $2;
+	    $articleURL = $3;
+	    
+	    # Score the article
+	    $articleScore = 0;
+	    $matchText = $abstract.$title;
+
+	    foreach $word ( keys %scores ){
+		# Match the keywords
+		$wordCount = ( $matchText =~ s/($word)/$1/gi );
+		$articleScore += $wordCount * $scores{$word};
+
+	    }
+	    
+	    if( $debug ){
+		print "Title: ", $title,"\n";
+		print "Score: ", $articleScore,"\n";
+	    }
+	    
+
+	# This join is split in the sort, and on
+	# final output
+	$artLine = join( "!!", 
+				$articleScore,
+				$title, $abstract, $articleURL );
+	push( @outputArticles,  $artLine  );
+	}
+    }
+    # Assign back
+    @articleList = @outputArticles;
+    
+    if( $debug ){
+	print "Articles processed\n";
+    }
+}
+
+# =============================================
+
+sub CompareArticles{
+    # Compares two articles, as packed above
+    # Used by the sort routine
+    my( @art1, @art2 );
+    
+    @art1 = split(/!!/,$a);
+    @art2 = split(/!!/,$b);
+    
+    $art2[0] <=> $art1[0];
+}

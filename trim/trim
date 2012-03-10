@@ -1,0 +1,39 @@
+#!/usr/bin/perl -w
+use strict;
+use vars qw(@tmp $file $i %head);
+die("Use: trim filename [col numbers] [> outfile]\n")
+    unless (scalar(@ARGV) > 0);
+die("No columns selected. Stopping...\n")
+    unless (scalar(@ARGV) > 1);
+
+$file = shift(@ARGV);
+
+# Map old column numbers to new
+$i = 0;
+foreach (@ARGV) {
+    $i++;
+    $head{$_} = $i;
+}
+
+open INFILE, "<$file" or die("$file not found\n");
+while (<INFILE>) {
+    chomp;
+    @tmp = split(/\s+/);
+    shift(@tmp) unless ($tmp[0]); #Chop leading space
+    if ($tmp[0] eq '#') {
+	shift(@tmp);
+	# Pick only header lines that are column descriptors
+	next unless ($tmp[0]);
+	next unless ($tmp[0] =~ /^-?\d/); 
+	# Pick only descriptors that have been reqeuested
+	$i = shift(@tmp);
+	next unless( exists($head{$i}) );
+	print "# $head{$i} @tmp\n";
+    }
+    else {
+	foreach (@ARGV) {print "$tmp[$_ - 1] ";}
+	print("\n");
+    }
+}
+close INFILE;
+exit(0);
