@@ -21,11 +21,13 @@ Example configuration files for the two scripts are also provided, as is the lis
 
 Example invocation: arXivVoyeur --config=conffile --output=outfile [--debug]
 
+See also this blog post for discussion: http://letterstonature.wordpress.com/2008/11/21/arxiv-filtering/
+
 trim
 ====
 
-Just a simple alternative for the *nix `cut` tool, which I have used countless times to pull columns from a catalogue in ascii format. One day, relational databases will replace ascii files as the pre-eminent distritbution format for objects of catalogues.
+Just a simple alternative for the *nix `cut` tool, which I have used countless times to pull columns from a catalogue of astronomical objects in ascii format. One day, relational databases will replace ascii files as the pre-eminent distribution format for catalogues of objects.
 
-Use: trim filename [col numbers] [> outfile]
+Until then, use: trim filename [col numbers] [> outfile]
 
 Column numbers start at one, because I was writing more Fortran than C at the time this script emerged.
